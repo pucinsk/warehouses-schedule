@@ -15,6 +15,9 @@ AllCops:
 
   TargetRubyVersion: 3.0.2
 
+RSpec/NestedGroups:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
