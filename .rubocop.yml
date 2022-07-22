@@ -1,0 +1,19 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+  Exclude:
+    - config.ru
+    - bin/**/*
+    - config/**/*
+    - db/schema.rb
+    - node_modules/**/*
+    - Rakefile
+
+  TargetRubyVersion: 3.0.2
+
+Style/Documentation:
+  Enabled: false
