@@ -122,6 +122,7 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
+    pg (1.4.1)
     propshaft (0.6.4)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -205,7 +206,6 @@ GEM
     rubocop-rspec (2.12.1)
       rubocop (~> 1.31)
     ruby-progressbar (1.11.0)
-    sqlite3 (1.4.4)
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.3.0)
@@ -230,6 +230,7 @@ DEPENDENCIES
   debug
   jbuilder
   jsbundling-rails
+  pg (~> 1.4, >= 1.4.1)
   propshaft
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
@@ -238,7 +239,6 @@ DEPENDENCIES
   rubocop (~> 1.32)
   rubocop-rails (~> 2.15, >= 2.15.2)
   rubocop-rspec (~> 2.12, >= 2.12.1)
-  sqlite3 (~> 1.4)
   tzinfo-data
   web-console
 

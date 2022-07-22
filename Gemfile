@@ -7,10 +7,10 @@ ruby '3.1.2'
 
 gem 'jbuilder'
 gem 'jsbundling-rails'
+gem 'pg', '~> 1.4', '>= 1.4.1'
 gem 'propshaft'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
-gem 'sqlite3', '~> 1.4'
 # gem "redis", "~> 4.0"
 gem 'bootsnap', require: false
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
