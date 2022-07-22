@@ -17,3 +17,7 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Style/SymbolProc:
+  Exclude:
+    - db/migrate/**/*.rb
