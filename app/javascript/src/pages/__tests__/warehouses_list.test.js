@@ -3,24 +3,25 @@ import axios from 'axios'
 import '@testing-library/jest-dom'
 import { act, render, waitFor } from '@testing-library/react'
 import WarehouseList from '../warehouses_list'
+import { BrowserRouter } from 'react-router-dom'
 
 jest.mock('axios')
 
 describe('WarehouseList', () => {
   it('displays fetched warehouses', async () => {
     const warehouses = [
-      { id: 'abc123' },
-      { id: 'def456' }
+      { id: 'abc123' }
     ]
 
     axios.get.mockResolvedValueOnce({ data: warehouses })
     const { findByText } = render(
-      <WarehouseList />
+      <WarehouseList />, { wrapper: BrowserRouter }
     )
 
     await waitFor(async () => {
-      expect(await findByText(`Warehouse ${warehouses[0].id}`)).toBeInTheDocument()
-      expect(await findByText(`Warehouse ${warehouses[1].id}`)).toBeInTheDocument()
+      const warehouseLink1 = await findByText(`Warehouse ${warehouses[0].id}`)
+      expect(warehouseLink1).toBeInTheDocument()
+      expect(warehouseLink1).toHaveAttribute('href', '/warehouses/abc123')
     })
   })
 
@@ -42,6 +43,7 @@ describe('WarehouseList', () => {
     const error = new Error('Boom!')
 
     beforeEach(() => {
+      jest.spyOn(console, 'error').mockImplementation(() => {})
       axios.get.mockRejectedValueOnce(error)
     })
 
@@ -56,11 +58,9 @@ describe('WarehouseList', () => {
     })
 
     it('logs error', async () => {
-      const errorLogSpy = jest.spyOn(console, 'error')
-
       await act(async () => await render(<WarehouseList />))
 
-      expect(errorLogSpy).toBeCalledWith(error)
+      expect(console.error).toBeCalledWith(error)
     })
   })
 })

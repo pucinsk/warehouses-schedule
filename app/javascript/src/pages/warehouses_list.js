@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { fetchWarehouses } from './../api'
 
 const WarehouseList = () => {
@@ -8,7 +9,13 @@ const WarehouseList = () => {
     const getWarehouses = async () => (
       await fetchWarehouses()
         .then(({ data }) => setWarehouses(data))
-        .catch((e) => console.error(e))
+        .catch((e) => {
+          if (e.response) {
+            console.error(e.response.data)
+          } else {
+            console.error(e)
+          }
+        })
     )
 
     getWarehouses()
@@ -26,7 +33,7 @@ const WarehouseList = () => {
     <div>
       <ul>
         {warehouses.map(({ id }) => (
-          <li key={id}>Warehouse {id}</li>
+          <li key={id}><Link to={`/warehouses/${id}`}>Warehouse {id}</Link></li>
         ))}
       </ul>
     </div>
