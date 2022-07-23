@@ -87,4 +87,45 @@ RSpec.describe Api::WarehousesController do
       end
     end
   end
+
+  describe '#show' do
+    subject(:show_response) { response }
+
+    let(:request) { get "/api/warehouses/#{warehouse_id}" }
+
+    context 'when warehouse exists' do
+      let(:warehouse) { Warehouse.create }
+      let(:warehouse_id) { warehouse.id }
+
+      before { request }
+
+      it { is_expected.to be_successful }
+
+      describe '#body' do
+        subject(:json_body) { JSON.parse(show_response.body, symbolize_names: true) }
+
+        let(:expected_response) { { id: warehouse.id } }
+
+        it { is_expected.to match(expected_response) }
+      end
+    end
+
+    context 'when warehouse does not exist' do
+      let(:warehouse_id) { 'non-existing-id' }
+
+      before { request }
+
+      it { is_expected.not_to be_successful }
+
+      it { is_expected.to have_http_status(:not_found) }
+
+      describe '#body' do
+        subject(:json_body) { JSON.parse(show_response.body, symbolize_names: true) }
+
+        let(:expected_response) { { message: "Couldn't find Warehouse with 'id'=#{warehouse_id}" } }
+
+        it { is_expected.to match(expected_response) }
+      end
+    end
+  end
 end
