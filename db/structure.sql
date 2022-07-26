@@ -26,6 +26,22 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: scheduled_slots; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.scheduled_slots (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    warehouse_id uuid NOT NULL,
+    start_time timestamp(6) without time zone NOT NULL,
+    end_time timestamp(6) without time zone NOT NULL,
+    duration_in_seconds integer NOT NULL,
+    booked_by character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -54,6 +70,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: scheduled_slots scheduled_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.scheduled_slots
+    ADD CONSTRAINT scheduled_slots_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -70,12 +94,28 @@ ALTER TABLE ONLY public.warehouses
 
 
 --
+-- Name: index_scheduled_slots_on_warehouse_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_scheduled_slots_on_warehouse_id ON public.scheduled_slots USING btree (warehouse_id);
+
+
+--
+-- Name: scheduled_slots fk_rails_baba0b0b40; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.scheduled_slots
+    ADD CONSTRAINT fk_rails_baba0b0b40 FOREIGN KEY (warehouse_id) REFERENCES public.warehouses(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20220722160449');
+('20220722160449'),
+('20220723134847');
 
 

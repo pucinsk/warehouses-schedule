@@ -1,7 +1,23 @@
 # frozen_string_literal: true
 
 class TimeRange
+  class Duration
+    attr_reader :duration_in_seconds
+    alias in_seconds duration_in_seconds
+
+    def initialize(duration_in_seconds:)
+      @duration_in_seconds = duration_in_seconds
+    end
+
+    def duration_in_minutes
+      @duration_in_minutes ||= (duration_in_seconds / 60).to_i
+    end
+    alias in_minutes duration_in_minutes
+  end
+
   attr_reader :start_time, :end_time
+
+  delegate :duration_in_seconds, :duration_in_minutes, :in_seconds, :in_minutes, to: :duration
 
   def initialize(start_time, end_time)
     @start_time = start_time
@@ -26,7 +42,7 @@ class TimeRange
 
   private
 
-  def duration_in_seconds
-    @duration_in_seconds ||= end_time - start_time
+  def duration
+    @duration ||= Duration.new(duration_in_seconds: end_time - start_time)
   end
 end

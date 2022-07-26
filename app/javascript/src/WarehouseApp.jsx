@@ -4,6 +4,7 @@ import Warehouse from './pages/warehouse'
 import WarehouseList from './pages/warehouses_list'
 
 import 'bootstrap/scss/bootstrap.scss'
+import './styles.scss'
 
 const WarehouseApp = () => (
   <>
@@ -20,7 +21,7 @@ const WarehouseApp = () => (
         <Routes>
           <Route exact path="/" element={<WarehouseList />} />
           <Route path="/warehouses" element={<WarehouseList />} />
-          <Route path="/warehouses/:warehouseId" element={<Warehouse />} />
+          <Route path="/warehouses/:warehouseId/*" element={<Warehouse />} />
         </Routes>
       </BrowserRouter>
     </div>
