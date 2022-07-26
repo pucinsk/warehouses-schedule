@@ -3,9 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Warehouse from './pages/warehouse'
 import WarehouseList from './pages/warehouses_list'
 
-const App = () => (
+import 'bootstrap/scss/bootstrap.scss'
+
+const WarehouseApp = () => (
   <>
-    <h3>Warehouses</h3>
+    <h3>Warehouse</h3>
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<WarehouseList />} />
@@ -16,4 +18,4 @@ const App = () => (
   </>
 )
 
-export default App
+export default WarehouseApp

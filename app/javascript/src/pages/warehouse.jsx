@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchWarehouse } from './../api'
+import { fetchWarehouse } from '../api'
 
 const Warehouse = () => {
   const { warehouseId } = useParams()

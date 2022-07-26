@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchWarehouses } from './../api'
+import { fetchWarehouses } from '../api'
 
 const WarehouseList = () => {
   const [warehouses, setWarehouses] = useState([])
