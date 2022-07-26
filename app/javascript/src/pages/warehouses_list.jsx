@@ -30,13 +30,20 @@ const WarehouseList = () => {
   }
 
   return (
-    <div>
-      <ul>
-        {warehouses.map(({ id }) => (
-          <li key={id}><Link to={`/warehouses/${id}`}>Warehouse {id}</Link></li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className='col-12 text-center'>
+        <h3>Warehouses</h3>
+      </div>
+      <div className='row'>
+          {warehouses.map(({ id }) => (
+            <div className='col-md-4 border p-5' key={id}>
+              <Link to={`/warehouses/${id}`}>
+                Warehouse {id}
+              </Link>
+            </div>
+          ))}
+      </div>
+    </>
   )
 }
 
