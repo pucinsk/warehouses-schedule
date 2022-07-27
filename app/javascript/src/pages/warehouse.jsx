@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import { formatISO, lastDayOfYear } from 'date-fns'
 import TimeSlotsSearchResult from './time_slots_search_result'
-import { formatDate, useQuery } from '../utils'
+import { formatDate, formatDuration, useQuery } from '../utils'
 
 import 'react-datepicker/dist/react-datepicker.min.css'
 
@@ -70,9 +70,9 @@ const AvailableTimeSlotsForm = () => {
         <p>Booked Times</p>
         <div className='wrapper-scroll-y scrollbar scrollbar-list'>
           <ul className='list-group'>
-            {scheduledSlots.map(({ startTime, durationInMinutes: duration }, idx) => (
+            {scheduledSlots.map(({ startTime, durationInMinutes }, idx) => (
               <li key={`sts-${idx}`} className='list-group-item'>
-                {formatDate(startTime)}
+                {formatDate(startTime)} - {formatDuration(durationInMinutes)}
               </li>
             ))}
           </ul>

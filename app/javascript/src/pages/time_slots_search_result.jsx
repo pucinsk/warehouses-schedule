@@ -1,8 +1,8 @@
-import { format, formatDuration } from 'date-fns'
+import { format } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchTimeSlots } from '../api'
-import { formatDate, useQuery } from '../utils'
+import { fetchTimeSlots, scheduleTimeSlot } from '../api'
+import { formatDate, formatDuration, useQuery } from '../utils'
 
 const TimeSlotsSearchResult = () => {
   const { warehouseId } = useParams()
@@ -29,7 +29,18 @@ const TimeSlotsSearchResult = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log(selectedTime)
+    scheduleTimeSlot(warehouseId, selectedTime, duration)
+      .then(({ data }) => {
+        console.log('created', data)
+        window.location = `warehouses/${warehouseId}`
+      })
+      .catch((e) => {
+        if (e.response) {
+          console.error(e.response.data)
+        } else {
+          console.error(e)
+        }
+      })
   }
 
   return (
@@ -51,11 +62,11 @@ const TimeSlotsSearchResult = () => {
             </tr>
           </thead>
           <tbody>
-          {timeSlots.map(({ startTime, durationInMinutes: minutes, isFree }, idx) => (
+          {timeSlots.map(({ startTime, durationInMinutes, isFree }, idx) => (
             <tr key={`ts-${idx}`}>
               <th scope='row'>{idx + 1}</th>
               <td>{formatDate(startTime)}</td>
-              <td>{formatDuration(minutes)}</td>
+              <td>{formatDuration(durationInMinutes)}</td>
               <td>{isFree ? 'Free' : 'Booked'}</td>
               <td>
                 <input
@@ -63,6 +74,7 @@ const TimeSlotsSearchResult = () => {
                   name='time_slot_start_time'
                   value={startTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
+                  disabled={!isFree}
                 />
               </td>
             </tr>

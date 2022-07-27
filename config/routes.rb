@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace 'api', defaults: { format: :json } do
     resources :warehouses, only: %i[index show] do
       resources :time_slots, only: :index
-      resources :scheduled_slots, only: :index
+      resources :scheduled_slots, only: %i[index show create]
     end
   end
 

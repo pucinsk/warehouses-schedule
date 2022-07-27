@@ -6,14 +6,6 @@ module Api
       time_slots
     end
 
-    def create
-      time_slot = warehouse.scheduled_slots.new(time_slot_params)
-
-      return if time_slot.save
-
-      render json: { errors: time_slot.errors }, status: :bad_request
-    end
-
     private
 
     def time_slots
