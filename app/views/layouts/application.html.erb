@@ -8,6 +8,10 @@
 
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script>
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      document.cookie = `timezone=${timezone}; SameSite=None; Secure; path=/`;
+    </script>
   </head>
 
   <body>

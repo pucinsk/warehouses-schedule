@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ScheduledSlot < ApplicationRecord
+  include TimeRangeable
+
   belongs_to :warehouse
 
   before_create :calculate_duration
@@ -8,6 +10,6 @@ class ScheduledSlot < ApplicationRecord
   private
 
   def calculate_duration
-    self.duration_in_seconds = end_time - start_time
+    self.duration_in_minutes = time_range.duration_in_minutes
   end
 end

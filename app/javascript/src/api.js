@@ -2,6 +2,7 @@ import axios from 'axios'
 import { differenceInMinutes } from 'date-fns'
 
 axios.defaults.baseURL = '/api/'
+axios.defaults.withCredentials = true
 
 export const fetchWarehouses = () => axios.get('warehouses')
 export const fetchWarehouse = (warehouseId) => axios.get(`warehouses/${warehouseId}`)

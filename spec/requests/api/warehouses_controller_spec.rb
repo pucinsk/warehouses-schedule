@@ -67,25 +67,6 @@ RSpec.describe Api::WarehousesController do
         it { is_expected.to match_array(expected_response) }
       end
     end
-
-    context 'when error occurs' do
-      let(:exception) { StandardError.new('Boom!') }
-
-      before do
-        allow(Warehouse).to receive(:all).and_raise(exception)
-        request
-      end
-
-      it { is_expected.not_to be_successful }
-
-      it { is_expected.to have_http_status(:internal_server_error) }
-
-      describe '#body' do
-        subject(:json_body) { JSON.parse(index_response.body, symbolize_names: true) }
-
-        it { is_expected.to match(message: "Something went wrong. #{exception}") }
-      end
-    end
   end
 
   describe '#show' do

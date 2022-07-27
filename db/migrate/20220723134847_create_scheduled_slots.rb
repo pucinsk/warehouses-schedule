@@ -6,7 +6,7 @@ class CreateScheduledSlots < ActiveRecord::Migration[7.0]
       t.references :warehouse, null: false, foreign_key: true, type: :uuid
       t.datetime :start_time, null: false
       t.datetime :end_time, null: false
-      t.integer :duration_in_seconds, null: false
+      t.integer :duration_in_minutes, null: false
       t.string :booked_by
 
       t.timestamps

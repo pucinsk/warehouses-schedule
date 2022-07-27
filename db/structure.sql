@@ -34,7 +34,7 @@ CREATE TABLE public.scheduled_slots (
     warehouse_id uuid NOT NULL,
     start_time timestamp(6) without time zone NOT NULL,
     end_time timestamp(6) without time zone NOT NULL,
-    duration_in_seconds integer NOT NULL,
+    duration_in_minutes integer NOT NULL,
     booked_by character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

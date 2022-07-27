@@ -32,6 +32,13 @@ class TimeRange
     validate
   end
 
+  class << self
+    def today
+      today_time = Time.zone.today.at_beginning_of_day
+      new(today_time, today_time.tomorrow)
+    end
+  end
+
   def in_ranges(duration:, increment:, &block)
     return to_enum(__method__, duration: duration, increment: increment) unless block_given?
 
