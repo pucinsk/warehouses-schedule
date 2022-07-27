@@ -24,7 +24,7 @@ RSpec.describe TimeRange do
   end
 
   describe '#next_range' do
-    subject(:next_range) { time_range.next_range(increment, duration) }
+    subject(:next_range) { time_range.next_range(increment: increment, duration: duration) }
 
     let(:duration) { 1.hour }
     let(:increment) { 1.hour }
@@ -37,4 +37,92 @@ RSpec.describe TimeRange do
       expect(next_range.end_time).to eq(start_time + increment + duration)
     end
   end
+
+  # rubocop:disable RSpec/MissingExampleGroupArgument
+  describe '#overlaps?' do
+    subject(:overlaps) { time_range.overlaps?(time_range1) }
+
+    let(:time_range1) { described_class.new(start_time1, end_time1) }
+
+    context 'when two ranges are exactly the same' do
+      #  ──────────────────────────
+      #  ──────────────────────────
+
+      let(:start_time1) { start_time }
+      let(:end_time1) { end_time }
+
+      it { is_expected.to be(true) }
+    end
+
+    context do
+      # ─────────────────────────────────────
+      #      ──────────────────────────
+
+      let(:start_time1) { start_time + 1.hour }
+      let(:end_time1) { end_time - 1.hour }
+
+      it { is_expected.to be(true) }
+    end
+
+    context do
+      #      ──────────────────────────
+      # ─────────────────────────────────────
+
+      let(:start_time1) { start_time - 1.hour }
+      let(:end_time1) { end_time + 1.hour }
+
+      it { is_expected.to be(true) }
+    end
+
+    context do
+      # ──────────────────────────
+      #            ──────────────────────────
+
+      let(:start_time1) { start_time + 1.hour }
+      let(:end_time1) { end_time + 1.hour }
+
+      it { is_expected.to be(true) }
+    end
+
+    context do
+      #            ──────────────────────────
+      # ──────────────────────────
+
+      let(:start_time1) { start_time - 1.hour }
+      let(:end_time1) { end_time - 1.hour }
+
+      it { is_expected.to be(true) }
+    end
+
+    context do
+      # ───────────
+      #            ───────────
+
+      let(:start_time1) { end_time }
+      let(:end_time1) { end_time + 1.hour }
+
+      it { is_expected.to be(false) }
+    end
+
+    context do
+      #            ───────────
+      # ───────────
+
+      let(:start_time1) { start_time - 1.hour }
+      let(:end_time1) { start_time }
+
+      it { is_expected.to be(false) }
+    end
+
+    context do
+      # ───────────
+      #               ───────────
+
+      let(:start_time1) { end_time + 1.hour }
+      let(:end_time1) { start_time1 + 1.hour }
+
+      it { is_expected.to be(false) }
+    end
+  end
+  # rubocop:enable RSpec/MissingExampleGroupArgument
 end
