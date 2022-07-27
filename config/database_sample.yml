@@ -16,5 +16,4 @@ test:
 production:
   <<: *default
   database: machik_production
-  username: machik
-  password: <%= ENV['MACHIK_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

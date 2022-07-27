@@ -12,7 +12,7 @@ esbuild.build({
   entryPoints,
   outdir: path.join(process.cwd(), 'app/assets/builds'),
   plugins: [sassPlugin(), railsPlugin()],
-  sourcemap: process.env.RAILS_ENV !== 'production',
-  minify: process.env.RAILS_ENV === 'production' && 'external',
+  sourcemap: process.env.RAILS_ENV !== 'production' && 'external',
+  minify: process.env.RAILS_ENV === 'production',
   watch: process.argv.includes('--watch')
 }).catch(() => process.exit(1))
