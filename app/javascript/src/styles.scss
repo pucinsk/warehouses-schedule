@@ -1,9 +1,15 @@
-.table-wrapper-scroll-y {
+.wrapper-scroll-y {
   display: block;
 }
 
-.table-scrollbar {
+.scrollbar {
   position: relative;
-  height: 400px;
   overflow: auto;
+}
+
+.scrollbar-list {
+  height: 180px;
+}
+.scrollbar-table {
+  height: 400px;
 }

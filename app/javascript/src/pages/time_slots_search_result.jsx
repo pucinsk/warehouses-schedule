@@ -1,8 +1,8 @@
-import { format } from 'date-fns'
+import { format, formatDuration } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchTimeSlots } from '../api'
-import { customFormatDuration, useQuery } from '../utils'
+import { formatDate, useQuery } from '../utils'
 
 const TimeSlotsSearchResult = () => {
   const { warehouseId } = useParams()
@@ -26,9 +26,6 @@ const TimeSlotsSearchResult = () => {
       })
   }, [date, duration])
 
-  const formatDate = (dateIsoString) => format(new Date(dateIsoString), 'pp PPP')
-  const formatDuration = (durationInMinutes) => customFormatDuration({ start: 0, end: durationInMinutes * 60 * 1000 })
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -42,7 +39,7 @@ const TimeSlotsSearchResult = () => {
         <div className='col-2 ms-auto'>
           <button type='submit' className='btn btn-primary'>Book Time</button>
         </div>
-        <div className='table-wrapper-scroll-y table-scrollbar'>
+        <div className='wrapper-scroll-y scrollbar scrollbar-table'>
         <table className="table">
           <thead>
             <tr>

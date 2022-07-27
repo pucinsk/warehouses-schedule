@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { fetchWarehouse } from '../api'
+import { fetchScheduledSlots, fetchWarehouse } from '../api'
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import { formatISO, lastDayOfYear } from 'date-fns'
+import TimeSlotsSearchResult from './time_slots_search_result'
+import { formatDate, useQuery } from '../utils'
 
 import 'react-datepicker/dist/react-datepicker.min.css'
-import TimeSlotsSearchResult from './time_slots_search_result'
-import { useQuery } from '../utils'
+
 
 const AvailableTimeSlotsForm = () => {
   const query = useQuery()
+  const { warehouseId } = useParams()
   const [date, setDate] = useState(query.get('date') ? new Date(query.get('date')) : new Date())
+  const [scheduledSlots, setScheduledSlots] = useState([])
   const [duration, setDuration] = useState(query.get('duration') || 0)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    fetchScheduledSlots(warehouseId)
+      .then(({ data }) => setScheduledSlots(data))
+      .catch((e) => {
+        if (e.response) {
+          console.error(e.response.data)
+        } else {
+          console.error(e)
+        }
+      })
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -51,6 +66,18 @@ const AvailableTimeSlotsForm = () => {
         </div>
         <button type="submit" className="btn btn-primary">Search</button>
       </form>
+      <div className="col-md-5 border p-2">
+        <p>Booked Times</p>
+        <div className='wrapper-scroll-y scrollbar scrollbar-list'>
+          <ul className='list-group'>
+            {scheduledSlots.map(({ startTime, durationInMinutes: duration }, idx) => (
+              <li key={`sts-${idx}`} className='list-group-item'>
+                {formatDate(startTime)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
