@@ -27,3 +27,7 @@ group :development do
   gem 'rubocop-rspec', '~> 2.12', '>= 2.12.1'
   gem 'web-console'
 end
+
+group :test do
+  gem 'simplecov', require: false
+end
