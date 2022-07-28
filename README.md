@@ -1,24 +1,37 @@
-# README
+### Warehouses Schedule
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app allows to:
+* select warehouse;
+* see booked times
+* find available time slots for specific day and duration
+* book time slots
 
-Things you may want to cover:
+[Demo Link](https://blue-glitter-8651.fly.dev/)
 
-* Ruby version
+![docs/screenshot.png](docs/screenshot.png)
 
-* System dependencies
+### Setup
+Requirements:
+* Ruby 3.1.1
+* Node 16
+* Postgres ([installation manual](https://www.postgresql.org/download/))
 
-* Configuration
+Setup app
+```
+  git clone git@github.com:pucinsk/warehouses-schedule.git
+  bundle
+```
 
-* Database creation
+Setup database
+```
+cp config/database_sample.yml config/database.yml
+rails db:prepare
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Run
+```
+bin/dev
+# or
+rails s
+yarn build --watch
+```

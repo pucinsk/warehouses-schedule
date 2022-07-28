@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Warehouse.create
+Warehouse.create
 
 Warehouse.last.scheduled_slots.create(
   [
