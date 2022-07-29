@@ -5,6 +5,16 @@ import { act, render, waitFor } from '@testing-library/react'
 import WarehouseList from '../warehouses_list'
 import { BrowserRouter } from 'react-router-dom'
 
+jest.mock('../../utils', () => {
+  const originalModule = jest.requireActual('../../utils')
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    csfrToken: jest.fn(() => 'abc123')
+  }
+})
+
 jest.mock('axios')
 
 describe('WarehouseList', () => {

@@ -1,9 +1,9 @@
 import axios from 'axios'
+import { csfrToken } from './utils'
 
 axios.defaults.baseURL = '/api/'
 axios.defaults.withCredentials = true
-const csfrToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-axios.defaults.headers.post['X-CSRF-Token'] = csfrToken
+axios.defaults.headers.post['X-CSRF-Token'] = csfrToken()
 
 export const fetchWarehouses = () => axios.get('warehouses')
 export const fetchWarehouse = (warehouseId) => axios.get(`warehouses/${warehouseId}`)

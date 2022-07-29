@@ -44,8 +44,10 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
+    "jsdom": "^20.0.0",
     "postcss-loader": "^7.0.1",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.54.0",
@@ -55,6 +57,10 @@
   "jest": {
     "testEnvironment": "jsdom",
     "resetMocks": true,
-    "restoreMocks": true
+    "restoreMocks": true,
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./app/javascript/src/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   }
 }

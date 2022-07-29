@@ -15,3 +15,5 @@ export const customFormatDuration = ({ start, end }) => {
 
 export const formatDate = (dateIsoString) => format(new Date(dateIsoString), 'pp PPP')
 export const formatDuration = (durationInMinutes) => customFormatDuration({ start: 0, end: durationInMinutes * 60 * 1000 })
+
+export const csfrToken = () => document.querySelector('meta[name="csrf-token"]').getAttribute('content')

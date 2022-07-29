@@ -8,7 +8,6 @@ import { formatDate, formatDuration, useQuery } from '../utils'
 
 import 'react-datepicker/dist/react-datepicker.min.css'
 
-
 const AvailableTimeSlotsForm = () => {
   const query = useQuery()
   const { warehouseId } = useParams()
