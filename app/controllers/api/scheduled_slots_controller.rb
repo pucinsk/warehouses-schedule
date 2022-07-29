@@ -3,7 +3,7 @@
 module Api
   class ScheduledSlotsController < BaseController
     def index
-      @scheduled_slots = warehouse.scheduled_slots
+      @scheduled_slots = warehouse.scheduled_slots.order(:start_time)
     end
 
     def show

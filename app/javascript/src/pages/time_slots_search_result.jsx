@@ -1,13 +1,35 @@
 import { format } from 'date-fns'
+import { func, bool } from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { fetchTimeSlots, scheduleTimeSlot } from '../api'
 import { formatDate, formatDuration, useQuery } from '../utils'
+
+const ConfirmBookModal = ({ show, onClose, onConfirm, ...rest }) => (
+  <Modal show={show} onHide={onClose}>
+    <Modal.Header closeButton>
+      <Modal.Title>Confirm</Modal.Title>
+    </Modal.Header>
+    <Modal.Body {...rest} />
+    <Modal.Footer>
+      <Button variant='secondary' onClick={onClose}>Close</Button>
+      <Button variant='primary' onClick={onConfirm}>Book Time</Button>
+    </Modal.Footer>
+  </Modal>
+)
+
+ConfirmBookModal.propTypes = {
+  show: bool.isRequired,
+  onClose: func.isRequired,
+  onConfirm: func.isRequired
+}
 
 const TimeSlotsSearchResult = () => {
   const { warehouseId } = useParams()
   const [timeSlots, setTimeSlots] = useState([])
   const [selectedTime, setSelectedTime] = useState()
+  const [showConfirmModal, setConfirmModalShow] = useState(false)
   const query = useQuery()
   const date = query.get('date')
   const duration = query.get('duration')
@@ -26,12 +48,11 @@ const TimeSlotsSearchResult = () => {
       })
   }, [date, duration])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
+  const handleConfirm = () => {
     scheduleTimeSlot(warehouseId, selectedTime, duration)
       .then(({ data }) => {
         console.log('created', data)
+        setConfirmModalShow(false)
         window.location = `warehouses/${warehouseId}`
       })
       .catch((e) => {
@@ -41,6 +62,12 @@ const TimeSlotsSearchResult = () => {
           console.error(e)
         }
       })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    setConfirmModalShow(true)
   }
 
   return (
@@ -83,6 +110,17 @@ const TimeSlotsSearchResult = () => {
         </table>
         </div>
       </form>
+      {
+        duration && selectedTime && (
+          <ConfirmBookModal
+            show={showConfirmModal}
+            onClose={() => setConfirmModalShow(false)}
+            onConfirm={handleConfirm}
+          >
+            Book {formatDuration(duration)} on {formatDate(new Date(selectedTime))}
+          </ConfirmBookModal>
+        )
+      }
     </>
   )
 }
